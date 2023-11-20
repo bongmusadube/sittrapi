@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db  # Make sure the web service depends on the database service.
+
+  db:
+    container_name: postgredb
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ADMIN
+      POSTGRES_DB: sittrdatabase
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+networks:
+  default:
+    name: postgre-service_default
